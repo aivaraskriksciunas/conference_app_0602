@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block "title" %}
+    {{ object.title }}
+{% endblock %}
+
+{% block "content" %}
+    <h1>{{ object.title }}</h1>
+
+    <div>Pradzia: {{ object.start_date }}</div>
+    <div>Pabaiga: {{ object.end_date }}</div>
+
+    <h2>Renginiai:</h2>
+    <ol>
+        {% for event in object.event_set.all %}
+            <li>
+                {{ event.title }}
+                ({{ event.date }})
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}

@@ -60,7 +60,13 @@ TEMPLATES = [
         # C:\Users\Aivaras\Documents\Project, templates
         # os path join funkcija ->
         # C:\Users\Aivaras\Documents\Project\templates
-        "DIRS": [ os.path.join( BASE_DIR, 'templates' ) ],
+        "DIRS": [
+            os.path.join( BASE_DIR, 'templates' )
+            # Šitoje vietoje galim ir pasirašyti tiesiog kelią iki aplanko,
+            # pvz C:\Users\Aivaras\Documents\Project\conference_app\templates
+            # bet toks kelias bus priklausomas nuo kompiuterio, ir jei projektą
+            # perkelsim į kitą vietą, mums projektas nebeveiks
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

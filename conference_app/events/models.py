@@ -3,7 +3,7 @@ from conferences.models import Conference
 
 # Create your models here.
 class Event( models.Model ):
-    date = models.DateTimeField()
+    date = models.DateTimeField( null = True )
     title = models.CharField( max_length = 100 )
     visitors = models.IntegerField( default = 0 )
 

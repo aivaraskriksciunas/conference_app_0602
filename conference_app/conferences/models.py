@@ -10,6 +10,9 @@ class Conference( models.Model ):
     created_at = models.DateTimeField( auto_now_add = True )
     updated_at = models.DateTimeField( auto_now = True )
 
+    def __str__( self ):
+        return self.title
+
 # CREATE TABLE Confereces (
 #   id INT PRIMARY KEY AUTO_INCREMENT,
 #   start_date ...

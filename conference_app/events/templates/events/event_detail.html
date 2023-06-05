@@ -8,4 +8,8 @@
   <h1>Renginys: {{ renginys.title }}</h1>
 
   <div>Pradžia: {{ renginys.date }}</div>
+  <div>Jau dalyvauja: {{ renginys.visitors }}</div>
+
+  <a href="/events/register/{{ renginys.id }}">Užsiregistruoti</a>
+  <a href="{% url 'register-visitor' renginys.id %}">Užsiregistruoti</a>
 {% endblock %}

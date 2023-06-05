@@ -18,6 +18,10 @@
                     {{ event.title }}
                 </a>
                 ({{ event.date }})
+
+                {% if user.is_authenticated %}
+                    Dalyvauja {{ event.visitors }}
+                {% endif %}
             </li>
         {% endfor %}
     </ol>

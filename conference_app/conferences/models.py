@@ -7,6 +7,8 @@ class Conference( models.Model ):
     end_date = models.DateField()
     title = models.CharField( max_length = 100 )
 
+    picture = models.ImageField( null = True )
+
     created_at = models.DateTimeField( auto_now_add = True )
     updated_at = models.DateTimeField( auto_now = True )
 

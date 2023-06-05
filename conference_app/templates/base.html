@@ -13,6 +13,12 @@
       </div>
     </nav>
     <div class="container py-5">
+        {% if user.is_authenticated %}
+            Esate prisijungęs kaip {{ user.username }}
+        {% else %}
+            <a href="{% url 'login' %}">Prisijunkite</a>
+        {% endif %}
+
         {% block "content" %}
         {% endblock %}
     </div>

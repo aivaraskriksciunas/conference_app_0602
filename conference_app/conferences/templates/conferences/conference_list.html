@@ -8,7 +8,8 @@ Konferencijų sąrašas
     <ol>
         {% for conference in object_list %}
             <li>
-                {{ conference.title }}
+                <a href="{% url 'conference-detail' conference.id %}">{{ conference.title }}</a>
+<!--            <a href="/conferences/{{ conference.id }}">{{ conference.title }}</a>-->
                 ({{ conference.start_date }} - {{ conference.end_date }})
             </li>
         {% endfor %}

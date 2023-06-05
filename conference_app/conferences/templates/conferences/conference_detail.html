@@ -14,7 +14,9 @@
     <ol>
         {% for event in object.event_set.all %}
             <li>
-                {{ event.title }}
+                <a href="{% url 'event-detail' event.id %}">
+                    {{ event.title }}
+                </a>
                 ({{ event.date }})
             </li>
         {% endfor %}

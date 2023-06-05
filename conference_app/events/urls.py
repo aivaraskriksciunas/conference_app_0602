@@ -6,6 +6,6 @@ from events.views import (
 
 urlpatterns = [
     # /events/2/
-    path( '<int:pk>/', EventDetailView.as_view() ),
+    path( '<int:pk>/', EventDetailView.as_view(), name = "event-detail" ),
     path( 'register/<int:renginio_id>/', register_visitor, name = "register-visitor" ),
 ]

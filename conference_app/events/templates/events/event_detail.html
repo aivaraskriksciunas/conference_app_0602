@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block "title" %}
+  Renginiai
+{% endblock %}
+
+{% block "content" %}
+  <h1>Renginys: {{ renginys.title }}</h1>
+
+  <div>Pradžia: {{ renginys.date }}</div>
+{% endblock %}

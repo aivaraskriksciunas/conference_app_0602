@@ -33,3 +33,23 @@ class RegisterVisitorView( LoginRequiredMixin, View ):
 # Atlernatyva, ka padaro LoginRequiredMixin:
 #     if not request.user.is_authenticated:
 #         return redirect( 'login' )
+
+class UserEventList( View ):
+    def get( self, request ):
+
+        # Apsauga nuo neprisijungusių vartotojų
+        if not request.user.is_authenticated:
+            return redirect( 'login' )
+
+        user_events = EventRegistration.objects.filter(
+            user = request.user
+        )
+
+        return render(
+            request,
+            "events/user_events.html",
+            { "object_list": user_events }
+        )
+
+# def user_event_list( request ):
+#     pass

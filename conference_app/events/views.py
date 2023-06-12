@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import DetailView
-from events.models import Event, EventRegistration
+from events.models import Event, EventRegistration, CompanyRegistration
+
 
 class EventDetailView( DetailView ):
     model = Event
@@ -12,16 +13,27 @@ class EventDetailView( DetailView ):
 
     def post( self, request, pk ):
         # Apdoroti requestą
+        # 0. Išsitraukti duomenis į kintamuosius
+        # (nebūtina bet gera praktika)
+        company_name = request.POST.get( 'imones_pavadinimas' )
+        zmoniu_skaicius = request.POST.get( 'zmoniu_skaicius' )
+        pastaba = request.POST.get( 'pastabos' )
         # 1. Patikrinti vartotojo įvestus duomenis
-        if not request.POST.get( 'zmoniu_skaicius' ).isnumeric():
+        if not zmoniu_skaicius.isnumeric():
             return HttpResponse( "Padarėte klaidą :(" )
-        if len( request.POST.get( 'imones_pavadinimas' ) ) == 0:
+        if len( company_name ) == 0:
             return HttpResponse( "Įmonės pavadinimas yra privalomas :(" )
         # 1a. Patikrinti ar pk egzistuoja (ar yra Event su tuo pk)
-        event = get_object_or_404( Event, pk = pk )
+        renginys = get_object_or_404( Event, pk = pk )
         # 2. Veiksmas: įrašymas į duomenų bazę (kursime naują registraciją)
+        registration = CompanyRegistration()
+        registration.company_name = company_name
+        registration.people_count = zmoniu_skaicius
+        registration.remarks = pastaba
+        registration.event = renginys
+        registration.save()
         # 3. Rezultatas: HTML arba redirect
-        return HttpResponse( "užklausa gauta" )
+        return redirect( f"/events/{pk}")
 
 # View, kurį pasiekus prie lankytojų skaičiaus bus pridėtas 1
 class RegisterVisitorView( LoginRequiredMixin, View ):

@@ -12,4 +12,21 @@
 
   <a href="/events/register/{{ renginys.id }}">Užsiregistruoti</a>
   <a href="{% url 'register-visitor' renginys.id %}">Užsiregistruoti</a>
+
+  <form action="{% url 'event-detail' renginys.id %}" method="post">
+    {% csrf_token %}
+    <div>
+      <label>Įmonės pavadinimas:</label>
+      <input type="text" name="imones_pavadinimas">
+    </div>
+    <div>
+      <label>Žmonių skaičius:</label>
+      <input type="number" name="zmoniu_skaicius">
+    </div>
+    <div>
+      <label>Pastabos:</label>
+      <textarea name="pastabos"></textarea>
+    </div>
+    <input type="submit" value="Registruotis">
+  </form>
 {% endblock %}

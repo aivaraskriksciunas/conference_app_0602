@@ -10,6 +10,19 @@ class EventDetailView( DetailView ):
     model = Event
     context_object_name = "renginys"
 
+    def post( self, request, pk ):
+        # Apdoroti requestą
+        # 1. Patikrinti vartotojo įvestus duomenis
+        if not request.POST.get( 'zmoniu_skaicius' ).isnumeric():
+            return HttpResponse( "Padarėte klaidą :(" )
+        if len( request.POST.get( 'imones_pavadinimas' ) ) == 0:
+            return HttpResponse( "Įmonės pavadinimas yra privalomas :(" )
+        # 1a. Patikrinti ar pk egzistuoja (ar yra Event su tuo pk)
+        event = get_object_or_404( Event, pk = pk )
+        # 2. Veiksmas: įrašymas į duomenų bazę (kursime naują registraciją)
+        # 3. Rezultatas: HTML arba redirect
+        return HttpResponse( "užklausa gauta" )
+
 # View, kurį pasiekus prie lankytojų skaičiaus bus pridėtas 1
 class RegisterVisitorView( LoginRequiredMixin, View ):
     def get( self, request, renginio_id ):

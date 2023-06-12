@@ -13,6 +13,14 @@
   <a href="/events/register/{{ renginys.id }}">Užsiregistruoti</a>
   <a href="{% url 'register-visitor' renginys.id %}">Užsiregistruoti</a>
 
+  <br>
+  {% if messages %}
+    {% for msg in messages %}
+      <div>{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+  <br>
+
   <form action="{% url 'event-detail' renginys.id %}" method="post">
     {% csrf_token %}
     <div>

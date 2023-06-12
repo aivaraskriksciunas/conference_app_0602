@@ -1,5 +1,5 @@
 from django.contrib import admin
-from conferences.models import Conference
+from conferences.models import Conference, Comment
 from events.models import Event
 
 # Klasė nurodanti, kokie dar susiję modeliai turėtų būti vaizduojami konferencijos lange
@@ -14,3 +14,4 @@ class ConferenceAdmin( admin.ModelAdmin ):
     inlines = [ EventInline ]
 
 admin.site.register( Conference, ConferenceAdmin )
+admin.site.register( Comment )

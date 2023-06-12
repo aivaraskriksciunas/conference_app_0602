@@ -29,4 +29,18 @@
             </li>
         {% endfor %}
     </ol>
+
+    <h2>Komentarai:</h2>
+    {% if user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div>
+                <label>Komentaras:</label>
+                <textarea name="komentaras"></textarea>
+            </div>
+            <input type="submit" value="Rašyti komentarą">
+        </form>
+    {% else %}
+        Norint komentuoti reikia <a href="{% url 'login' %}">prisijungti</a>.
+    {% endif %}
 {% endblock %}

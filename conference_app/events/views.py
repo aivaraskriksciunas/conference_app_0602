@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import HttpResponse
@@ -20,9 +21,11 @@ class EventDetailView( DetailView ):
         pastaba = request.POST.get( 'pastabos' )
         # 1. Patikrinti vartotojo įvestus duomenis
         if not zmoniu_skaicius.isnumeric():
-            return HttpResponse( "Padarėte klaidą :(" )
+            messages.error( request, "Žmonių skaičius turi būti skaitinė vertė :(" )
+            return redirect( f"/events/{pk}")
         if len( company_name ) == 0:
-            return HttpResponse( "Įmonės pavadinimas yra privalomas :(" )
+            messages.error( request, "Įmonės pavadinimas turi būti užpildytas" )
+            return redirect( f"/events/{pk}")
         # 1a. Patikrinti ar pk egzistuoja (ar yra Event su tuo pk)
         renginys = get_object_or_404( Event, pk = pk )
         # 2. Veiksmas: įrašymas į duomenų bazę (kursime naują registraciją)

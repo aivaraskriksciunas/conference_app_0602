@@ -32,7 +32,7 @@
 
     <h2>Komentarai:</h2>
     {% if user.is_authenticated %}
-        <form action="" method="post">
+        <form action="{% url 'create-comment' object.id %}" method="post">
             {% csrf_token %}
             <div>
                 <label>Komentaras:</label>

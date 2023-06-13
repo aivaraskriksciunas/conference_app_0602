@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block "title" %}
+    Sukurti konferenciją
+{% endblock %}
+
+{% block "content" %}
+    <h1>Nauja konferencija</h1>
+
+    {% if messages %}
+        {% for zinute in messages %}
+            <div>
+                {{ zinute }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'create-conference' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label>Pradžios data (YYYY-MM-DD):</label>
+            <input type="text" name="start_date">
+        </div>
+        <div>
+            <label>Pabaigos data (YYYY-MM-DD):</label>
+            <input type="text" name="end_date">
+        </div>
+        <div>
+            <label>Pavadinimas:</label>
+            <input type="text" name="title">
+        </div>
+        <input type="submit" value="Sukurti">
+    </form>
+{% endblock %}

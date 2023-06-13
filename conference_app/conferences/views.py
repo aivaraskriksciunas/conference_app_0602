@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Conference, Comment
-
+from datetime import datetime
 
 # 	Sukurkite ListView, kuris atvaizduotų visas konferencijas
 class ConferenceListView( ListView ):
@@ -55,3 +55,40 @@ class CreateCommentView( View, LoginRequiredMixin ):
         komentaras.save()
         # 3. Rezultatas vartotojui
         return redirect( f"/conferences/{konferencijos_id}" )
+
+
+class CreateConferenceView( View ):
+    def get( self, request ):
+        return render(
+            request,
+            "conferences/conference_create.html"
+        )
+
+    def post( self, request ):
+        # 0. Išsikelti duomenis
+        start_date = request.POST.get( 'start_date' )
+        end_date = request.POST.get( 'end_date' )
+        title = request.POST.get( 'title' )
+
+        # 1. Validacija
+        if len( title ) == 0:
+            messages.error( request, "Būtina įvesti pavadinimą" )
+            return redirect( "/conferences/new" )
+
+        try:
+            # from datetime import datetime
+            start_date = datetime.strptime( start_date, "%Y-%m-%d" )
+            end_date = datetime.strptime( end_date, "%Y-%m-%d" )
+        except ValueError:
+            messages.error( request, "Blogai įvestos datos!" )
+            return redirect( "/conferences/new" )
+
+        # 2. Veiksmas - sukuriame įrašą
+        conference = Conference()
+        conference.start_date = start_date
+        conference.end_date = end_date
+        conference.title = title
+        conference.save()
+
+        # 3. Rezultatas
+        return redirect( f"/conferences/{conference.id}/" )

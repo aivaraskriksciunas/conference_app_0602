@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -26,12 +27,16 @@ class ConferenceDetailView( DetailView ):
 
 class CreateCommentView( View, LoginRequiredMixin ):
     # konferencijos_id -> turi sutapti su pavadinimu urls.py faile!
+    def get( self, request ):
+        return render( ... )
+
     def post( self, request, konferencijos_id ):
         # 0. išsirašyti visas reikšmes
         komentaro_tekstas = request.POST.get( 'komentaras' )
         # 1. Validacija
         if len( komentaro_tekstas ) == 0:
-            return HttpResponse( "Klaida! negali būti tuščias" )
+            messages.error( request, "Komentaras negali būti tuščias!" )
+            return redirect( f"/conferences/{konferencijos_id}" )
         # tikrinam ar vartotojas prisijungęs
         # Tikrinimo nereikia jei naudojam LoginRequiredMixin
         # if request.user.is_authenticated == False:
@@ -46,6 +51,7 @@ class CreateCommentView( View, LoginRequiredMixin ):
         komentaras.author = request.user
         komentaras.conference = konferencija
         komentaras.comment = komentaro_tekstas
+        # Sukurtą modelį įrašom į DB. Be šitos eilutės jis liks tik kompiuterio atmintyje, bet nebus išsaugotas
         komentaras.save()
         # 3. Rezultatas vartotojui
         return redirect( f"/conferences/{konferencijos_id}" )

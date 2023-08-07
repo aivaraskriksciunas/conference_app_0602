@@ -1,0 +1,23 @@
+version: "3"
+services:
+  konferencijos:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      # - conference_app:/usr/src/app
+      - type: bind
+        source: ./conference_app
+        target: /usr/src/app
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: conference_user
+      POSTGRES_DB: conference_db
+
+volumes:
+  conference_app:
